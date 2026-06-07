@@ -50,3 +50,8 @@ void Drama::setData(istream& infile) {
 void Drama::display(std::ostream& os) const {
 	os << "Category: " << category << " , Stock: " << stock << ", Director: " << director << ", Title: " << title << ", Release Year: " << releaseYear << endl;
 }
+
+void Drama::setSearchKey(string dir, string t) {
+	director = dir;
+	title = t;
+}

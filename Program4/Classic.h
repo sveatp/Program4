@@ -25,6 +25,8 @@ class Classic : public Movie {
 		// Format: "C, Stock, Director, Title, Major Actor, Release Month Release Year"
 		virtual void display(std::ostream& os) const override;
 
+		void setSearchKey(int month, int year, string actor);
+
 	protected: 
 		string majorActor;			// Format: "FirstName LastName"
 		int releaseMonth;

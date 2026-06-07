@@ -1,34 +1,45 @@
-#include "Hashtable.h"
-#include "CustomerDatabase.h"
-#include "Customer.h"
-#include <iostream>
+#include "Business.h"
 
 int main(){
-    CustomerDatabase db; //create customer database
-    db.addCustomer(1000, "Smith", "John"); //add customers
-    db.addCustomer(2000, "Doe", "Jane");
-    db.addCustomer(5555, "Brown", "Charlie");
+    auto stripBOM = [](ifstream& f) {
+        char bom[3];
+        f.read(bom, 3);
+        if (!((unsigned char)bom[0] == 0xEF &&
+            (unsigned char)bom[1] == 0xBB &&
+            (unsigned char)bom[2] == 0xBF)) {
+            f.seekg(0);
+        }
+        };
 
-    Customer* c1 = db.getCustomer(1000); //get customers by id
-    if(c1 != nullptr){
-        std::cout << "Customer 1: " << c1->getFirst() << " " << c1->getLast() << std::endl;
-    } else {
-        std::cout << "Customer 1 not found" << std::endl;
+    Business store;
+
+    ifstream movieFile("data4movies.txt");
+    ifstream customerFile("data4customers.txt");
+    ifstream commandFile("data4commands.txt");
+
+    stripBOM(movieFile);
+    stripBOM(customerFile);
+    stripBOM(commandFile);
+
+    if (!movieFile) {
+        cerr << "Error: Could not open data4movies.txt" << endl;
+        return 1;
     }
 
-    Customer* c2 = db.getCustomer(2000);
-    if(c2 != nullptr){
-        std::cout << "Customer 2: " << c2->getFirst() << " " << c2->getLast() << std::endl;
-    } else {
-        std::cout << "Customer 2 not found" << std::endl;
+    if (!customerFile) {
+        cerr << "Error: Could not open data4customers.txt" << endl;
+        return 1;
     }
 
-    Customer* c3 = db.getCustomer(5555);
-    if(c3 != nullptr){
-        std::cout << "Customer 3: " << c3->getFirst() << " " << c3->getLast() << std::endl;
-    } else {
-        std::cout << "Customer 3 not found" << std::endl;
+    if (!commandFile) {
+        cerr << "Error: Could not open data4commands.txt" << endl;
+        return 1;
     }
+
+
+    store.buildMovie(movieFile);
+    store.buildCustomer(customerFile);
+    store.processTransaction(commandFile);
 
     return 0;
 }

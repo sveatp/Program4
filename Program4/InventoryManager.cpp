@@ -9,10 +9,21 @@ InventoryManager::~InventoryManager() {
 }
 
 void InventoryManager::buildInventory(ifstream& filename) {
+	
+	char bom[3];
+	filename.read(bom, 3);
+	if (!((unsigned char)bom[0] == 0xEF &&
+		(unsigned char)bom[1] == 0xBB &&
+		(unsigned char)bom[2] == 0xBF)) {
+		filename.seekg(0);
+	}
+
 	MovieFac factory;
 	char category;
 
 	while (filename >> category) {
+		char comma;
+		filename >> comma;
 		Movie* movie = factory.createMovie(category);
 
 		if (movie != nullptr) {

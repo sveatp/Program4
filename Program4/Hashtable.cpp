@@ -24,7 +24,7 @@ bool Hashtable::insert( Customer* customer){ //insert customer into hashtable wi
     
     if (table[index] == nullptr) { //empty spot, insert 
         table[index] = customer;
-        cout << "Customer " << customer->getId() << " inserted at index " << index << "." << endl;
+        //cout << "Customer " << customer->getId() << " inserted at index " << index << "." << endl;
         return true;
 
     } else {
@@ -34,7 +34,7 @@ bool Hashtable::insert( Customer* customer){ //insert customer into hashtable wi
 
             if (table[newIndex] == nullptr) { //empty spot found
                 table[newIndex] = customer; //insert 
-                cout << "Customer " << customer->getId() << " inserted at index " << newIndex << "." << endl;
+              //  cout << "Customer " << customer->getId() << " inserted at index " << newIndex << "." << endl;
                 return true;
             }
 
@@ -49,26 +49,21 @@ bool Hashtable::insert( Customer* customer){ //insert customer into hashtable wi
     }
 }
 
-Customer* Hashtable::get(int id) const{ //get customer
+Customer* Hashtable::get(int id) const { //get customer
     int index = hashFunction(id); //compute index
 
-    if (table[index] != nullptr && table[index]->getId() == id) { //check index
-        return table[index]; //found
+    for (int i = 0; i < TABLE_SIZE; i++) { //linear probe
+        int newIndex = (index + i) % TABLE_SIZE; //check next index
 
-    } else {
+        if (table[newIndex] == nullptr) { //empty spot, customer not found
+            return nullptr;
+        }
 
-        for (int i = 1; i < TABLE_SIZE; i++) { //linear probe
-            int newIndex = (index + i) % TABLE_SIZE; //check next index
-
-            if (table[newIndex] == nullptr) { //empty spot, customer not found
-                return nullptr;
-            }
-
-            if (table[newIndex]->getId() == id) { //customer found
-                return table[newIndex];
-            }
+        if (table[newIndex]->getId() == id) { //customer found
+            return table[newIndex];
         }
     }
     return nullptr; //customer not found 
 }
+   
 

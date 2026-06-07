@@ -51,3 +51,8 @@ void Comedy::display(std::ostream& os) const {
 	os << "Category: " << category << " , Stock: " << stock << ", Director: " << director << ", Title: " << title << ", Release Year: " << releaseYear << endl;
 }
 
+void Comedy::setSearchKey(string t, int y) {
+	title = t;
+	releaseYear = y;
+}
+

@@ -1,4 +1,7 @@
 #include "Customer.h"
+#include "Movie.h"
+#include "Transaction.h"
+
 using namespace std;
 
 Customer::Customer(){ //default constructor
@@ -21,19 +24,19 @@ Customer::Customer(int id, string lastName, string firstName){ //parameterized c
 }
 
 //getter functions
-int Customer::getId() { 
+int Customer::getId() const{ 
     return id;
 }
 
-string Customer::getFirst() {
+string Customer::getFirst() const {
     return first;
 }
 
-string Customer::getLast() {
+string Customer::getLast() const {
     return last;
 }
 
-void Customer::getHistory() const { //display transaction history
+void Customer::showHistory() const { //display transaction history
     cout << "Transaction History for " << first << " " << last << " (ID: " << id << "):" << endl;
     if (history.empty()) {
         cout << "No transactions found." << endl;
@@ -57,11 +60,12 @@ bool Customer::hasBorrowedMovie(const Movie* m) const { //check if customer has 
     
     int counter = 0;
     for (const Transaction* t : history) {
-        if(t->movie == m){
-            if (dynamic_cast<const Borrow*>(t)) {
-                counter++;                   // borrowed one
-            } else if (dynamic_cast<const Return*>(t)) {
-                counter--;                   // returned one
+        if(t->getMovie() == m) {
+            if (t->getAction() == 'B') {
+                counter++;
+            }
+            else if (t->getAction() == 'R') {
+                counter--;
             }
         }
 

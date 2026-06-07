@@ -17,7 +17,7 @@ class MovieFac {
 		~MovieFac();
 
 		// Returns a heap-allocated Movie object based on the category character, or nullptr if the category is invalid
-		Movie* createMovie(char category) const;
+		static Movie* createMovie(char category);
 };
 
 #endif // MOVIEFAC_H

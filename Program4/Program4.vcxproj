@@ -139,20 +139,39 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Borrow.h" />
+    <ClInclude Include="Business.h" />
     <ClInclude Include="Classic.h" />
     <ClInclude Include="Comedy.h" />
+    <ClInclude Include="Customer.h" />
+    <ClInclude Include="CustomerDatabase.h" />
     <ClInclude Include="Drama.h" />
+    <ClInclude Include="Hashtable.h" />
+    <ClInclude Include="History.h" />
     <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="MovieFac.h" />
+    <ClInclude Include="Return.h" />
+    <ClInclude Include="Transaction.h" />
+    <ClInclude Include="TransFac.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Borrow.cpp" />
+    <ClCompile Include="Business.cpp" />
     <ClCompile Include="Classic.cpp" />
     <ClCompile Include="Comedy.cpp" />
+    <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="CustomerDatabase.cpp" />
     <ClCompile Include="Drama.cpp" />
+    <ClCompile Include="driver.cpp" />
+    <ClCompile Include="Hashtable.cpp" />
+    <ClCompile Include="History.cpp" />
     <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="MovieFac.cpp" />
+    <ClCompile Include="Return.cpp" />
+    <ClCompile Include="Transaction.cpp" />
+    <ClCompile Include="TransFac.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

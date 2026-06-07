@@ -1,5 +1,8 @@
+#pragma once
+
 #include "Customer.h"
 #include "Hashtable.h"
+
 class CustomerDatabase{
     public:
         CustomerDatabase();

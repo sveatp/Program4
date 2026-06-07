@@ -60,10 +60,11 @@ void Classic::setData(istream& infile) {
 
 	// Read Major Actor (FirstName LastName)
 	string firstName, lastName;
-	infile >> firstName >> lastName >> comma;
+	infile >> firstName >> lastName;
 	majorActor = firstName + " " + lastName;
 
-	infile >> releaseMonth >> comma >> releaseYear;
+	infile >> releaseMonth >> releaseYear;
+	infile.ignore(256, '\n');
 }
 
 void Classic::display(std::ostream& os) const {
@@ -75,4 +76,10 @@ void Classic::display(std::ostream& os) const {
 		<< ", Release Month: " << releaseMonth
 		<< ", Release Year: " << releaseYear
 		<< endl;
+}
+
+void Classic::setSearchKey(int month, int year, string actor) {
+	releaseMonth = month;
+	releaseYear = year;
+	majorActor = actor;
 }

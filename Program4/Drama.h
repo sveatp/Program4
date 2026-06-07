@@ -19,6 +19,8 @@ class Drama : public Movie {
 		// Displays the movie's information in the specified format
 		// Format: "D, Stock, Director, Title, Release Year"
 		virtual void display(std::ostream& os) const override;
+
+		void setSearchKey(string director, string t);
 };	
 
 #endif // DRAMA_H

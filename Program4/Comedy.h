@@ -19,6 +19,8 @@ class Comedy : public Movie {
 		// Displays the movie's information in the specified format
 		// Format: "F, Stock, Director, Title, Release Year"
 		virtual void display(std::ostream& os) const override;
+
+		void setSearchKey(string t, int y);
 };
 
 #endif // COMEDY_H

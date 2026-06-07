@@ -39,12 +39,12 @@ bool Hashtable::insert( Customer* customer){ //insert customer into hashtable wi
             }
 
             if (table[newIndex]->getId() == customer->getId()) { //customer already exists
-                cout << "Customer " << customer->getId() << " already exists. Insertion failed." << endl;
+                cerr << "Customer " << customer->getId() << " already exists. Insertion failed." << endl;
                 return false;
             }
 
         }
-        cout << "Hashtable is full. Insertion failed." << endl; //table is full
+        cerr << "Hashtable is full. Insertion failed." << endl; //table is full
         return false;
     }
 }

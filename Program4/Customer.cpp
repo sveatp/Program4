@@ -42,8 +42,8 @@ void Customer::showHistory() const { //display transaction history
         cout << "No transactions found." << endl;
         return;
     }
-    for (const Transaction* t : history) {
-        t->display();
+    for (int i = history.size() - 1; i >= 0; i--) {
+        history[i]->display();
     }
 }
 

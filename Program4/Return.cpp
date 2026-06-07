@@ -14,6 +14,14 @@ void Return::setData(istream& input) { //set data for return transaction
     char movieType;
     input >> customerId >> mediaType >> movieType;
 
+    if (mediaType != 'D') {
+        cerr << "Error: Invalid media type " << mediaType
+            << " - only DVD (D) supported." << endl;
+        input.ignore(numeric_limits<streamsize>::max(), '\n');
+        delete movie;
+        movie = nullptr;
+        return;
+    }
 
     movie = MovieFac::createMovie(movieType); //create movie using factory
     if (movie == nullptr) {
@@ -61,7 +69,7 @@ void Return::setData(istream& input) { //set data for return transaction
 void Return::doTrans(CustomerDatabase& customerDB, InventoryManager& inventory){
     Customer* customer = customerDB.getCustomer(customerId); //get customer from database
     if (customer == nullptr) {
-        cout << "Error: Customer ID " << customerId << " not found." << endl;
+        cerr << "Error: Customer ID " << customerId << " not found." << endl;
 		delete movie; // Clean up movie if customer not found
 		movie = nullptr;
         return;
@@ -69,13 +77,13 @@ void Return::doTrans(CustomerDatabase& customerDB, InventoryManager& inventory){
 
 	// Attempt to return the movie to inventory
     if (movie == nullptr) {
-        cout << "Error: Invalid movie." << endl;
+        cerr << "Error: Invalid movie." << endl;
         return;
     }
 
     Movie* inventoryMovie = nullptr; //result movie from inventory search
     if (!inventory.getMovie(movie, inventoryMovie)) {
-        cout << "Error: Movie not found in inventory." << endl;
+        cerr << "Error: Movie not found in inventory." << endl;
 		delete movie; // Clean up movie if not found in inventory
 		movie = nullptr;
         return;
@@ -87,7 +95,7 @@ void Return::doTrans(CustomerDatabase& customerDB, InventoryManager& inventory){
 
 
     if (!customer->hasBorrowedMovie(inventoryMovie)) { //check if customer has borrowed the movie
-        cout << "Error: Customer " << customer->getFirst() << " " << customer->getLast() << " has not borrowed: " << movie->getTitle() << "\"." << endl;
+        cerr << "Error: Customer " << customer->getFirst() << " " << customer->getLast() << " has not borrowed: " << movie->getTitle() << "." << endl;
         movie = nullptr; // Set movie to nullptr since the return failed
         return;
     }

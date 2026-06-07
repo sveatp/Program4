@@ -14,6 +14,14 @@ void Borrow::setData(istream& input) { //set data for borrow transaction
     char movieType;
     input >> customerId >> mediaType >> movieType;
     
+    if (mediaType != 'D') {
+        cerr << "Error: Invalid media type " << mediaType
+             << " - only DVD (D) supported." << endl;
+        input.ignore(numeric_limits<streamsize>::max(), '\n');
+        delete movie;
+        movie = nullptr;
+        return;
+    }
 
     movie = MovieFac::createMovie(movieType); //create movie using factory
     if (movie == nullptr) { 
@@ -60,20 +68,20 @@ void Borrow::doTrans(CustomerDatabase& customerDB, InventoryManager& inventory) 
     Customer* customer = customerDB.getCustomer(customerId); //get customer from database
 
     if (customer == nullptr) {
-        cout << "Error: Customer ID " << customerId << " not found." << endl;
+        cerr << "Error: Customer ID " << customerId << " not found." << endl;
 		delete movie; // Clean up movie if customer not found
 		movie = nullptr;
         return;
     }
     if (movie == nullptr) {
-        cout << "Error: Invalid movie." << endl;
+        cerr << "Error: Invalid movie." << endl;
         return;
     }
 
     Movie* inventoryMovie = nullptr; //result movie from inventory search
     
     if (!inventory.getMovie(movie, inventoryMovie)) {
-        cout << "Error: Movie not found in inventory." << endl;
+        cerr << "Error: Movie not found in inventory." << endl;
 		delete movie; // Clean up movie if not found in inventory
 		movie = nullptr;
         return;
@@ -84,7 +92,7 @@ void Borrow::doTrans(CustomerDatabase& customerDB, InventoryManager& inventory) 
     ownsMovie = false;
 
 	if (!inventoryMovie->borrowMovie()) { // Attempt to borrow the movie
-		cout << "Error: Movie is currently unavailable." << endl;
+		cerr << "Error: Movie is currently unavailable." << endl;
 		movie = nullptr; // Set movie to nullptr since the borrow failed
 		return;
     }
